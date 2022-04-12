@@ -15,6 +15,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         BarangData("Mie Goreng", 15000),
         BarangData("Nasi Goreng Mie", 15000),
         BarangData("Mie Kuah", 14000),
+        BarangData("Nasi Goreng", 12000),
+        BarangData("Mie Goreng", 15000),
+        BarangData("Nasi Goreng Mie", 15000),
+        BarangData("Mie Kuah", 14000),
+        BarangData("Nasi Goreng", 12000),
+        BarangData("Mie Goreng", 15000),
+        BarangData("Nasi Goreng Mie", 15000),
+        BarangData("Mie Kuah", 14000),
     ]
     
     var dummyCart: [CartData] = []
@@ -24,6 +32,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var jumlah: Int = 0
     
     var selectedBarang: BarangData? = nil
+    
+    var selectedEdit: CartData? = nil
+    var selectedEditRow: Int? = nil
+    
+    var editState: Bool = false
     
     // define component
     @IBOutlet var cartList: UITableView!
@@ -48,17 +61,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet var labelJumlah: UILabel!
     
     @IBOutlet var btnAddToCart: UIButton!
+    @IBOutlet var btnCancelEdit: UIButton!
+    
+    @IBOutlet var textTotal: UILabel!
+    
+    @IBOutlet var btnBayar: UIButton!
+    
+    
     
     // action
     override func viewDidLoad() {
         super.viewDidLoad()
        
         dummySearch = dummyBarang
+        btnCancelEdit.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedBarang = dummySearch[indexPath.row]
-        updateBtnTambahkan()
+        if tableView == cartList {
+            selectedEdit = dummyCart[indexPath.row]
+            selectedEditRow = indexPath.row
+            activateEdit(true)
+        }else{
+            selectedBarang = dummySearch[indexPath.row]
+            updateBtnTambahkan()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -98,7 +125,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return cell
         }
     }
+    
+    @IBAction func unwindToKasir(unwindSegue: UIStoryboardSegue)
+    {
+        resetKasir()
+    }
+    
+    func resetKasir()
+    {
+        dummyCart = []
+        jumlah = 0
+        updateTotal()
+        updateJumlah()
+        cartList.reloadData()
+    }
 
+    // text-field(search) on-edit listener
     @IBAction func onEditSearch(_ sender: Any) {
         if let value = inputSearch.text {
             dummySearch = dummyBarang.filter { barang in
@@ -113,33 +155,94 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchList.reloadData()
     }
     
+    // update jumlah item
     func updateJumlah()
     {
-        labelJumlah.text = String(jumlah)
-        btnMinus.isEnabled = true
-        btnDel.isEnabled = true
+        if editState {
+            labelJumlah.text = String(jumlah)
+            btnMinus.isEnabled = true
+            btnDel.isEnabled = true
+        }else{
+            labelJumlah.text = String(jumlah)
+            btnMinus.isEnabled = true
+            btnDel.isEnabled = true
+        }
         updateBtnTambahkan()
         guard jumlah == 0 else {return}
         btnMinus.isEnabled = false
         btnDel.isEnabled = false
     }
     
+    // toggle Edit Mode
+    func activateEdit(_ a: Bool)
+    {
+        editState = a
+        if editState {
+            btnCancelEdit.isHidden = false
+            btnAddToCart.setTitle("Simpan Perubahan", for: .normal)
+            jumlah = dummyCart[selectedEditRow!].jumlah
+            updateJumlah()
+        }else {
+            btnCancelEdit.isHidden = true
+            btnAddToCart.setTitle("Tambahkan", for: .normal)
+            jumlah = 0
+            updateJumlah()
+        }
+        
+    }
+    
+    // toggle Button Tambahkan
     func updateBtnTambahkan()
     {
-        if selectedBarang != nil, jumlah > 0 {
+        if editState, jumlah > 0 {
             btnAddToCart.isEnabled = true
         }else {
-            btnAddToCart.isEnabled = false
+            if selectedBarang != nil, jumlah > 0 {
+                btnAddToCart.isEnabled = true
+            }else {
+                btnAddToCart.isEnabled = false
+            }
+        }
+       
+    }
+    
+    // update Total Harga dalam keranjang
+    func updateTotal()
+    {
+        var total = 0
+        for i in dummyCart {
+            total += i.jumlah * i.barang.harga
+        }
+        textTotal.text = "Rp \(total)"
+        if total > 0 {
+            btnBayar.isEnabled = true
+        }else{
+            btnBayar.isEnabled = false
         }
     }
     
+    // on-click listener button-add-to-cart
     @IBAction func ocAddToCart(_ sender: Any) {
-        dummyCart.append(CartData(selectedBarang!, jumlah))
+        if editState {
+            dummyCart[selectedEditRow!].jumlah = jumlah
+            searchList.reloadData()
+            cartList.reloadData()
+            activateEdit(false)
+        }else{
+            dummyCart.append(CartData(selectedBarang!, jumlah))
+            cartList.reloadData()
+            searchList.reloadData()
+            jumlah = 0
+            selectedBarang = nil
+            updateJumlah()
+        }
+        updateTotal()
+    }
+    
+    // on-click listener button-cancel-edit
+    @IBAction func ocCancelEdit(_ sender: Any) {
         cartList.reloadData()
-        searchList.reloadData()
-        jumlah = 0
-        selectedBarang = nil
-        updateJumlah()
+        activateEdit(false)
     }
     
     @IBAction func ocBtn1(_ sender: Any) {

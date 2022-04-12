@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40450579280413330065BE5C /* CashlessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40450578280413330065BE5C /* CashlessViewController.swift */; };
+		4045057B280420900065BE5C /* PaymentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045057A280420900065BE5C /* PaymentCollectionViewCell.swift */; };
+		4045057D28042FA70065BE5C /* CashPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045057C28042FA70065BE5C /* CashPaymentViewController.swift */; };
 		4095BA3F27FD7C7800E33B6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095BA3E27FD7C7800E33B6C /* AppDelegate.swift */; };
 		4095BA4127FD7C7800E33B6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095BA4027FD7C7800E33B6C /* SceneDelegate.swift */; };
 		4095BA4327FD7C7800E33B6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095BA4227FD7C7800E33B6C /* ViewController.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40450578280413330065BE5C /* CashlessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashlessViewController.swift; sourceTree = "<group>"; };
+		4045057A280420900065BE5C /* PaymentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaymentCollectionViewCell.swift; path = Kasir/PaymentCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		4045057C28042FA70065BE5C /* CashPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashPaymentViewController.swift; sourceTree = "<group>"; };
 		4095BA3B27FD7C7800E33B6C /* Kasir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kasir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4095BA3E27FD7C7800E33B6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4095BA4027FD7C7800E33B6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +117,8 @@
 				4095BA4027FD7C7800E33B6C /* SceneDelegate.swift */,
 				4095BA4227FD7C7800E33B6C /* ViewController.swift */,
 				4095BA4427FD7C7800E33B6C /* Main.storyboard */,
+				4045057C28042FA70065BE5C /* CashPaymentViewController.swift */,
+				40450578280413330065BE5C /* CashlessViewController.swift */,
 				4095BA4727FD7C7900E33B6C /* Assets.xcassets */,
 				4095BA4927FD7C7900E33B6C /* LaunchScreen.storyboard */,
 				4095BA4C27FD7C7900E33B6C /* Info.plist */,
@@ -138,6 +146,7 @@
 		4095BA6E27FD8A3100E33B6C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4045057A280420900065BE5C /* PaymentCollectionViewCell.swift */,
 				4095BA7027FD8A5000E33B6C /* CartCell.swift */,
 			);
 			path = Views;
@@ -285,10 +294,13 @@
 			files = (
 				4095BA4327FD7C7800E33B6C /* ViewController.swift in Sources */,
 				4095BA3F27FD7C7800E33B6C /* AppDelegate.swift in Sources */,
+				40450579280413330065BE5C /* CashlessViewController.swift in Sources */,
+				4045057D28042FA70065BE5C /* CashPaymentViewController.swift in Sources */,
 				4095BA7327FD8DD000E33B6C /* CartData.swift in Sources */,
 				4095BA4127FD7C7800E33B6C /* SceneDelegate.swift in Sources */,
 				4095BA7527FD938000E33B6C /* BarangData.swift in Sources */,
 				4095BA7127FD8A5000E33B6C /* CartCell.swift in Sources */,
+				4045057B280420900065BE5C /* PaymentCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
